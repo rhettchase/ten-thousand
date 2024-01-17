@@ -92,6 +92,11 @@ def test_six_ones():
     actual = GameLogic.calculate_score((1, 1, 1, 1, 1, 1))
     expected = 4000
     assert actual == expected
+    
+def test_two_trios():
+    actual = GameLogic.calculate_score((2, 2, 2, 3, 3, 3))
+    expected = 500
+    assert actual == expected
 
 
 @pytest.mark.parametrize(
