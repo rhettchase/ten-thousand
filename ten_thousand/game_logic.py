@@ -10,7 +10,7 @@ class GameLogic:
     
     Methods:
     roll_dice: returns a tuple with random values between 1 and 6
-    calculate_score: an integer representing the roll's score according to rules of game
+    calculate_score: returns an integer representing the roll's score according to rules of game
     """
     @staticmethod
     def roll_dice(number_of_dice):
