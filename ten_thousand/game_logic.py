@@ -24,18 +24,40 @@ class GameLogic:
         # Use Counter to count the occurrences of each number
         count = Counter(roll)
         
+        # Check for three pairs
+        if len(roll) == 6 and len(count) == 3 and all(qty == 2 for qty in count.values()):
+            return 1500
+        
         # Check for a straight (1-6)
         if all(count[num] == 1 for num in range(1, 7)):
             return 1500
 
         score = 0
+        
+        # Scoring for 1's
+        ones = count[1]
+        if ones == 1:
+            score += 100
+        elif ones == 2:
+            score += 200
+        elif ones == 3:
+            score += 1000
+        elif ones == 4:
+            score += 2000
+        elif ones == 5:
+            score += 3000
+        elif ones == 6:
+            score += 4000
+
+        # Remove counted '1's from the count
+        count[1] = 0
 
         # Score three or more of a kind
         for num, qty in count.items():
-
+            
             if qty >= 3:
                 if num == 1:
-                    three_of_a_kind_score = 1000
+                    continue  # Skip '1's as they are already scored
                 else:
                     three_of_a_kind_score = num * 100
 
@@ -44,7 +66,7 @@ class GameLogic:
                 elif qty == 4:
                     score += three_of_a_kind_score + num * 100  # Double the three of a kind score
                 elif qty == 5:
-                    score += three_of_a_kind_score + ((5 - 3) * three_of_a_kind_score) # Four times the three of a kind score
+                    score += three_of_a_kind_score + ((5 - 3) * three_of_a_kind_score) 
                 elif qty == 6:
                     score += three_of_a_kind_score + ((6 - 3) * three_of_a_kind_score)  # Eight times the three of a kind score
 
@@ -52,8 +74,7 @@ class GameLogic:
                 if num == 1 or num == 5:
                     count[num] = 0
 
-        # Score individual ones and fives if they are not part of a set
-        score += count[1] * 100
+        # Score individual fives if they are not part of a set
         score += count[5] * 50
 
         return score
