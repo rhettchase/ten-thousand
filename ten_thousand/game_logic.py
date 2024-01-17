@@ -49,47 +49,29 @@ class GameLogic:
 
         score = 0
         
-        # Scoring for 1's
-        ones = count[1]
-        if ones == 1:
-            score += 100
-        elif ones == 2:
-            score += 200
-        elif ones == 3:
-            score += 1000
-        elif ones == 4:
-            score += 2000
-        elif ones == 5:
-            score += 3000
-        elif ones == 6:
-            score += 4000
-
-        # Remove counted '1's from the count
-        count[1] = 0
-
-        # Score three or more of a kind
         for num, qty in count.items():
-            
             if qty >= 3:
-                if num == 1:
-                    continue  # Skip '1's as they are already scored
-                else:
-                    three_of_a_kind_score = num * 100
+                # calculate base score for three_of_a_kind
+                three_of_a_kind_score = 1000 if num == 1 else num * 100
+                multiplier = 1
 
-                if qty == 3:
-                    score += three_of_a_kind_score
-                elif qty == 4:
-                    score += three_of_a_kind_score + num * 100  # Double the three of a kind score
+                if qty == 4:
+                    multiplier = 2
                 elif qty == 5:
-                    score += three_of_a_kind_score + ((5 - 3) * three_of_a_kind_score) 
+                    multiplier = 3
                 elif qty == 6:
-                    score += three_of_a_kind_score + ((6 - 3) * three_of_a_kind_score)
+                    multiplier = 4
 
-                # Remove the scored dice from the count for ones and fives
-                if num == 1 or num == 5:
-                    count[num] = 0
-
-        # Score individual fives if they are not part of a set
-        score += count[5] * 50
+                # calculate score for roll based on base score for three of a kind * multiplier then add to score
+                score += three_of_a_kind_score * multiplier
+            elif num == 1:
+                # Scoring for individual 1's
+                score += qty * 100
+            elif num == 5:
+                # Scoring for individual 5's
+                score += qty * 50
 
         return score
+    
+    print(calculate_score((1, 1, 1, 1, 1, 6)))
+    # output: 3000
