@@ -31,7 +31,7 @@ The code was generated with the assistance of AI to generate code blocks.
 
 #### How to initialize/run your application (where applicable)
 
--`python3 -m ten_thousand.game_logic`
+-`python3 -m ten_thousand.game`
 
 #### How to use your library (where applicable)
 
