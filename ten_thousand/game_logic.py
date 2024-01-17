@@ -6,7 +6,7 @@ class GameLogic:
     A class to represent game logic for the ten thousand game.
     
     Attributes:
-    name: str - the name of the band member
+    none
     
     Methods:
     roll_dice: returns a tuple with random values between 1 and 6
@@ -14,6 +14,14 @@ class GameLogic:
     """
     @staticmethod
     def roll_dice(number_of_dice):
+        """
+        Static method that handles rolling dice
+        Parameters:
+        number_of_dice: int, between 1 and 6
+        Returns:
+        - tuple: with random values between 1 and 6; length of tuple must match the argument given to `roll_dice` method
+
+        """
         if 1 <= number_of_dice <= 6:
             return tuple(random.randint(1, 6) for _ in range(number_of_dice))
         else:
@@ -21,6 +29,13 @@ class GameLogic:
         
     @staticmethod
     def calculate_score(roll):
+        """
+        Static method that handles calculating the score for the dice roll
+        Parameters:
+        roll: tuple of integers that represent a dice roll
+        Returns:
+        integer representing the roll's score according to the rules of the game
+        """
         # Use Counter to count the occurrences of each number
         count = Counter(roll)
         
@@ -68,7 +83,7 @@ class GameLogic:
                 elif qty == 5:
                     score += three_of_a_kind_score + ((5 - 3) * three_of_a_kind_score) 
                 elif qty == 6:
-                    score += three_of_a_kind_score + ((6 - 3) * three_of_a_kind_score)  # Eight times the three of a kind score
+                    score += three_of_a_kind_score + ((6 - 3) * three_of_a_kind_score)
 
                 # Remove the scored dice from the count for ones and fives
                 if num == 1 or num == 5:
