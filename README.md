@@ -39,6 +39,4 @@ The code was generated with the assistance of AI to generate code blocks.
 
 #### Tests
 
-- Run tests by activating virtual environment and running `pytest` command in command line
-- To run tests specifically for `roll_dice`, run `pytest tests/version_1/test_roll_dice` in command line
-- To run the tests specifically for `calculate_score`, run `pytest tests/version_1/test_calculate_score.py` in command line
+- Run tests by activating virtual environment and running `python -m pytest -k version_2` command in command line
