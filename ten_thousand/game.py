@@ -58,7 +58,9 @@ def get_dice_to_bank(dice_rolled):
             return None
         
         try:
+            # converts each character in player input into integer and then forms a tuple out of those integers
             dice_kept = tuple(int(die) for die in keep_response)
+            # checks whether each die in dice_kept was actually part of the dice_rolled
             if not all(die in dice_rolled for die in dice_kept):
                 print("Invalid input. Please enter only the dice that were rolled.")
                 continue
