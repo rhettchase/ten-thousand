@@ -49,7 +49,8 @@ def get_dice_to_bank(dice_rolled):
     tuple: The dice chosen to keep, or None if the player chooses to quit.
     """
     while True:
-        dice_str = " ".join(map(str, dice_rolled))
+        # create list of strings that contain the rolled dice and concatenate them into single string separated by spaces
+        dice_str = " ".join([str(die) for die in dice_rolled])
         print(f"*** {dice_str} ***")
         print("Enter dice to keep, or (q)uit:")
         keep_response = input("> ").strip()
