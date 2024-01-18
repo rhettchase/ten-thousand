@@ -1,4 +1,4 @@
-from ten_thousand.game_logic import calculate_score
+from ten_thousand.game_logic import GameLogic
 
 def play(roller=None):
     welcome()
@@ -20,13 +20,16 @@ def start_game():
     print(f"Starting round {round}")
     print(f"Rolling {dice} dice...")
     
-    # Calculate score based on dice_num
-    score = calculate_score(dice_num)
-    print("Score:", score)
-    
     # Convert tuple elements to strings and join them with a space
     dice_str = " ".join(map(str, dice_num))
     print(f"*** {dice_str} ***")
+    
+    # Calculate score based on dice_num
+    score = GameLogic.calculate_score(dice_num)
+    print(f"You have {score} unbanked points and {dice} dice remaining")
+    print("(r)oll again, (b)ank your points or (q)uit:")
+    
+
     
     print("Enter dice to keep, or (q)uit:")
     response = input("> ")
