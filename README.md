@@ -1,14 +1,10 @@
-# LAB - Class 06
+# LAB - Class 07
 
-## Project: Ten Thousand v1
+## Project: Ten Thousand v2
 
 ## Project Description
 
-Defines a `GameLogic` class that handles calculating score for dice roll. This includes several methods: `calculate_score` and `roll_dice` static method. The `roll_dice` method returns a tuple with random values between 1 and 6. The `calculate_score` method returns an integer representing the roll's score according to rules of game
-
-The code was generated with the assistance of AI to generate code blocks.
-
-[Prompt Documentation](./prompt.md)
+Ten Thousand Game App now allows player to start and play the game. It allows user to set aside dice each roll, “bank” current score or decide to roll again. The app keeps track of total score and the current round.
 
 ### Author: Rhett Chase
 
@@ -31,14 +27,13 @@ The code was generated with the assistance of AI to generate code blocks.
 
 #### How to initialize/run your application (where applicable)
 
--`python3 -m ten_thousand.game_logic`
+-`python3 -m ten_thousand.game`
 
 #### How to use your library (where applicable)
 
 - `game_logic.py` uses the `random` and `Counter` libraries, which have been imported on the top of the script
+- `game.py` imports the `GameLogic` class to utilize its methods
 
 #### Tests
 
-- Run tests by activating virtual environment and running `pytest` command in command line
-- To run tests specifically for `roll_dice`, run `pytest tests/version_1/test_roll_dice` in command line
-- To run the tests specifically for `calculate_score`, run `pytest tests/version_1/test_calculate_score.py` in command line
+- Run tests by activating virtual environment and running `python -m pytest -k version_2` command in command line
