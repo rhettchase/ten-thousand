@@ -1,4 +1,5 @@
 from ten_thousand.game_logic import GameLogic
+from collections import Counter
 
 def play(roller=None):
     """Main function for the app. Starts the game of Ten Thousand.
@@ -7,8 +8,8 @@ def play(roller=None):
     roller: function - A function to roll the dice. If None, GameLogic.roll_dice is used.
     
     Returns:
-    displays the welcome message and prompts the user to start the game.
-    It then calls start_game with the appropriate dice roller.
+        string: displays the welcome message and prompts the user to start the game.
+        It then calls start_game with the appropriate dice roller.
     """
     if roller is None:
         roller = GameLogic.roll_dice
@@ -59,15 +60,27 @@ def get_dice_to_bank(dice_rolled):
             return None
         
         try:
-            # converts each character in player input into integer and then forms a tuple out of those integers
-            dice_kept = tuple(int(die) for die in keep_response)
-            # checks whether each die in dice_kept was actually part of the dice_rolled
-            if not all(die in dice_rolled for die in dice_kept):
-                print("Invalid input. Please enter only the dice that were rolled.")
-                continue
-            return dice_kept
+            # Remove spaces and then convert each character to an integer
+            dice_kept = tuple(int(die) for die in keep_response.replace(" ", ""))
+            
+            if GameLogic.validate_keepers(dice_rolled, dice_kept):
+                return dice_kept
+            else:
+                print("Cheater!!! Or possibly made a typo...")
         except ValueError:
-            print("Invalid input. Please enter valid numbers.")
+            print("Cheater!!! Or possibly made a typo...")
+            
+        #     # Creating a Counter for both rolled dice and kept dice
+        #     rolled_dice_count = Counter(dice_rolled)
+        #     kept_dice_count = Counter(dice_kept)
+            
+        #     # checks whether the count of each die in dice_kept does not exceed its count in dice_rolled
+        #     if all(kept_dice_count[die] <= rolled_dice_count[die] for die in dice_kept):
+        #         return dice_kept
+        #     else:
+        #         print("Cheater!!! Or possibly made a typo...")
+        # except ValueError:
+        #     print("Cheater!!! Or possibly made a typo...")
             
 def handle_player_action():
     """

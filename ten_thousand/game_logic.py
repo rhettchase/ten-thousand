@@ -73,5 +73,43 @@ class GameLogic:
 
         return score
     
-    print(calculate_score((1, 1, 1, 1, 1, 6)))
+    @staticmethod
+    def validate_keepers(roll, keepers):
+        """
+        Validates whether the keepers are a valid subset of rolled_dice.
+
+        Parameters:
+        roll (tuple): The dice that have been rolled.
+        keepers (tuple): The dice that the player wants to keep.
+
+        Returns:
+        bool: True if keepers are valid, False otherwise.
+        """
+        rolled_dice_count = Counter(roll)
+        kept_dice_count = Counter(keepers)
+
+        for die in kept_dice_count:
+            if kept_dice_count[die] > rolled_dice_count[die]:
+                return False
+        return True
+
+    
+    @staticmethod
+    def get_scorers(roll):
+        scoring_dice = []
+
+        count = Counter(roll)
+
+        # Add 1's and 5's since they always score
+        scoring_dice.extend([1] * count[1])
+        scoring_dice.extend([5] * count[5])
+
+        # Add dice that are part of three or more of the same number
+        for num, qty in count.items():
+            if qty >= 3:
+                scoring_dice.extend([num] * qty)
+
+        return tuple(scoring_dice)
+    
+    # print(calculate_score((1, 1, 1, 1, 1, 6)))
     # output: 3000

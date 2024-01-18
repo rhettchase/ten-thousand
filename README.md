@@ -1,6 +1,6 @@
-# LAB - Class 07
+# LAB - Class 08
 
-## Project: Ten Thousand v2
+## Project: Ten Thousand v3
 
 ## Project Description
 
