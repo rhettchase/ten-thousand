@@ -69,18 +69,7 @@ def get_dice_to_bank(dice_rolled):
                 print("Cheater!!! Or possibly made a typo...")
         except ValueError:
             print("Cheater!!! Or possibly made a typo...")
-            
-        #     # Creating a Counter for both rolled dice and kept dice
-        #     rolled_dice_count = Counter(dice_rolled)
-        #     kept_dice_count = Counter(dice_kept)
-            
-        #     # checks whether the count of each die in dice_kept does not exceed its count in dice_rolled
-        #     if all(kept_dice_count[die] <= rolled_dice_count[die] for die in dice_kept):
-        #         return dice_kept
-        #     else:
-        #         print("Cheater!!! Or possibly made a typo...")
-        # except ValueError:
-        #     print("Cheater!!! Or possibly made a typo...")
+
             
 def handle_player_action():
     """
@@ -140,6 +129,8 @@ def start_game(roller):
             total_score = bank_points(total_score, score, round)
             round += 1
             dice_remaining = 6
+            # print(f"You banked {score} points in round {round}")
+            # print(f"Total score is {total_score} points")
         elif action == "r":
             if dice_remaining == 0:
                 dice_remaining = 6
@@ -149,4 +140,13 @@ def start_game(roller):
         
 
 if __name__ == "__main__":
+    
+    # rolls = [
+    #     (2, 3, 1, 3, 4, 2),
+    #     (4, 2, 4, 4, 6),
+    #     (3, 2, 3, 2, 1, 4),
+    # ]
+    
+    # def mock_roller(number_of_dice):
+    #     return rolls.pop(0)
     play()

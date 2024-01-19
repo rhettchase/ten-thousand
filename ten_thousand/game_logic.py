@@ -96,20 +96,19 @@ class GameLogic:
     
     @staticmethod
     def get_scorers(roll):
-        scoring_dice = []
+        scorers = []
+        original_score = GameLogic.calculate_score(roll)
 
-        count = Counter(roll)
+        for die in roll:
+            # Check if removing this die reduces the score
+            temp_roll = list(roll)
+            temp_roll.remove(die)
+            new_score = GameLogic.calculate_score(tuple(temp_roll))
 
-        # Add 1's and 5's since they always score
-        scoring_dice.extend([1] * count[1])
-        scoring_dice.extend([5] * count[5])
+            if new_score < original_score:
+                scorers.append(die)
 
-        # Add dice that are part of three or more of the same number
-        for num, qty in count.items():
-            if qty >= 3:
-                scoring_dice.extend([num] * qty)
-
-        return tuple(scoring_dice)
+        return tuple(scorers)
     
     # print(calculate_score((1, 1, 1, 1, 1, 6)))
     # output: 3000
