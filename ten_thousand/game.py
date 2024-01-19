@@ -3,7 +3,7 @@ from collections import Counter
 
 dice_roller = None
 
-
+############# GAME PLAY #############
 def play(roller=None):
     """Main function for the app. Starts the game of Ten Thousand.
     
@@ -25,26 +25,28 @@ def play(roller=None):
         print("OK. Maybe another time")
     else:
         start_game()
-        
-def welcome():
-    """Prints the welcome message for the game"""
-    print("Welcome to Ten Thousand")
-    print("(y)es to play or (n)o to decline")
-    
-def roll_dice(dice_remaining):
+
+def start_game():
     """
-    Rolls the specified number of dice.
-    
+    Manages the rounds and overall game flow. This function controls the main game loop, including rolling dice, keeping score,
+    and handling player decisions.
+
     Parameters:
-    roller (function): The dice rolling function.
-    dice_remaining (int): The number of dice to roll.
-    
-    Returns:
-    tuple: The result of the dice roll.
+    roller (function): The function used to roll dice.
     """
-    global dice_roller
-    print(f"Rolling {dice_remaining} dice...")
-    return dice_roller(dice_remaining)
+    total_score = 0
+    round = 1
+    dice_remaining = 6
+    
+    while True:
+        round_score = do_round(round)
+
+        if round_score == -1:  # Player quits
+            print(f"Thanks for playing. You earned {total_score} points")
+            break
+
+        total_score = bank_points(total_score, round_score, round)
+        round += 1
 
 def do_round(round_num):
     """
@@ -93,8 +95,8 @@ def do_round(round_num):
             return round_score
         elif action == 'q':  # Quit
             return -1
-
-
+        
+############# HELPER FUNCTIONS #############
 def get_dice_to_bank(dice_rolled):
     """
     Prompts the player to choose which dice to keep from the roll.
@@ -126,18 +128,6 @@ def get_dice_to_bank(dice_rolled):
         except ValueError:
             print("Cheater!!! Or possibly made a typo...")
 
-def format_roll(roll):
-    """
-    Converts given roll into display friendly string.
-
-    Args:
-        roll: e.g. (5, 1, 1, 4, 5, 5)
-
-    Returns:
-        string: e.g. "*** 5 1 1 4 5 5 ***"
-    """
-    return f"*** {' '.join([str(die) for die in roll])} ***"
-
             
 def handle_player_action():
     """
@@ -166,42 +156,55 @@ def bank_points(total_score, score, round):
     print(f"Total score is {total_score} points")
     return total_score
         
-def start_game():
-    """
-    Manages the rounds and overall game flow. This function controls the main game loop, including rolling dice, keeping score,
-    and handling player decisions.
-
-    Parameters:
-    roller (function): The function used to roll dice.
-    """
-    total_score = 0
-    round = 1
-    dice_remaining = 6
+def welcome():
+    """Prints the welcome message for the game"""
+    print("Welcome to Ten Thousand")
+    print("(y)es to play or (n)o to decline")
     
-    while True:
-        round_score = do_round(round)
+def roll_dice(dice_remaining):
+    """
+    Rolls the specified number of dice.
+    
+    Parameters:
+    roller (function): The dice rolling function.
+    dice_remaining (int): The number of dice to roll.
+    
+    Returns:
+    tuple: The result of the dice roll.
+    """
+    global dice_roller
+    print(f"Rolling {dice_remaining} dice...")
+    return dice_roller(dice_remaining)
 
-        if round_score == -1:  # Player quits
-            print(f"Thanks for playing. You earned {total_score} points")
-            break
+def format_roll(roll):
+    """
+    Converts given roll into display friendly string.
 
-        total_score = bank_points(total_score, round_score, round)
-        round += 1
+    Args:
+        roll: e.g. (5, 1, 1, 4, 5, 5)
+
+    Returns:
+        string: e.g. "*** 5 1 1 4 5 5 ***"
+    """
+    return f"*** {' '.join([str(die) for die in roll])} ***"
 
 def zilch():
+    """Returns zilch message"""
     return """
 ****************************************
 **        Zilch!!! Round over         **
 ****************************************"""
 
+
 if __name__ == "__main__":
     
-    rolls = [
-        (1, 2, 5, 1, 2, 1),
-        (4, 4),
-        (1, 1, 2, 5, 1, 6),
-    ]
+    # rolls = [
+    #     (1, 2, 5, 1, 2, 1),
+    #     (4, 4),
+    #     (1, 1, 2, 5, 1, 6),
+    # ]
     
-    def mock_roller(number_of_dice):
-        return rolls.pop(0)
-    play(roller=mock_roller)
+    # def mock_roller(number_of_dice):
+    #     return rolls.pop(0)
+    # play(roller=mock_roller)
+    play()
