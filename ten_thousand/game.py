@@ -63,8 +63,15 @@ def do_round(round_num):
 
     while True:
         dice_rolled = roll_dice(dice_remaining)
-        dice_kept = get_dice_to_bank(dice_rolled)
+        # Check if all dice are scoring
+        scorers = GameLogic.get_scorers(dice_rolled)
+        if len(scorers) == 0:
+            dice_str = format_roll(dice_rolled)
+            zilch_message = zilch()  # Get the zilch message
+            print(dice_str + zilch_message)  # Concatenate and print both messages
+            return 0  # End the round with zero points
 
+        dice_kept = get_dice_to_bank(dice_rolled)
         if dice_kept is None:  # Player chooses to quit
             return -1
 
@@ -72,8 +79,6 @@ def do_round(round_num):
         round_score += score
         dice_remaining -= len(dice_kept)
         
-        # Check if all dice are scoring
-        scorers = GameLogic.get_scorers(dice_rolled)
         if len(scorers) == len(dice_rolled):
             dice_remaining = 6  # Reset dice if all are scoring
         
@@ -102,8 +107,8 @@ def get_dice_to_bank(dice_rolled):
     """
     while True:
         # create list of strings that contain the rolled dice and concatenate them into single string separated by spaces
-        dice_str = " ".join([str(die) for die in dice_rolled])
-        print(f"*** {dice_str} ***")
+        dice_str = format_roll(dice_rolled)
+        print(dice_str)
         print("Enter dice to keep, or (q)uit:")
         keep_response = input("> ").strip()
 
@@ -120,6 +125,18 @@ def get_dice_to_bank(dice_rolled):
                 print("Cheater!!! Or possibly made a typo...")
         except ValueError:
             print("Cheater!!! Or possibly made a typo...")
+
+def format_roll(roll):
+    """
+    Converts given roll into display friendly string.
+
+    Args:
+        roll: e.g. (5, 1, 1, 4, 5, 5)
+
+    Returns:
+        string: e.g. "*** 5 1 1 4 5 5 ***"
+    """
+    return f"*** {' '.join([str(die) for die in roll])} ***"
 
             
 def handle_player_action():
@@ -171,12 +188,18 @@ def start_game():
         total_score = bank_points(total_score, round_score, round)
         round += 1
 
+def zilch():
+    return """
+****************************************
+**        Zilch!!! Round over         **
+****************************************"""
+
 if __name__ == "__main__":
     
     rolls = [
-        (2, 3, 1, 3, 1, 2),
-        (4, 1, 4, 4, 3, 4),
-        (3, 2, 3, 2, 1, 4),
+        (1, 2, 5, 1, 2, 1),
+        (4, 4),
+        (1, 1, 2, 5, 1, 6),
     ]
     
     def mock_roller(number_of_dice):
