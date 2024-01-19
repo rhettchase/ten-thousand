@@ -46,6 +46,44 @@ def roll_dice(dice_remaining):
     print(f"Rolling {dice_remaining} dice...")
     return dice_roller(dice_remaining)
 
+def do_round(round_num):
+    """
+    Play a round of the game
+
+    Args:
+        round_num: The current round number
+
+    Returns:
+        integer for number of points scored in the round
+        -1 has special meaning for "quit"
+    """
+    print(f"Starting round {round_num}")
+    dice_remaining = 6
+    round_score = 0
+
+    while True:
+        dice_rolled = roll_dice(dice_remaining)
+        dice_kept = get_dice_to_bank(dice_rolled)
+
+        if dice_kept is None:  # Player chooses to quit
+            return -1
+
+        score = GameLogic.calculate_score(dice_kept)
+        round_score += score
+        dice_remaining -= len(dice_kept)
+        print(f"You have {round_score} unbanked points and {dice_remaining} dice remaining")
+
+        if dice_remaining == 0:  # All dice used, refresh dice
+            dice_remaining = 6
+
+        action = handle_player_action()
+
+        if action == 'b':  # Bank the points
+            return round_score
+        elif action == 'q':  # Quit
+            return -1
+
+
 def get_dice_to_bank(dice_rolled):
     """
     Prompts the player to choose which dice to keep from the roll.
@@ -118,32 +156,42 @@ def start_game():
     dice_remaining = 6
     
     while True:
-        print(f"Starting round {round}")
-        dice_rolled = roll_dice(dice_remaining)
+        round_score = do_round(round)
 
-        dice_kept = get_dice_to_bank(dice_rolled)
-        if dice_kept is None:
+        if round_score == -1:  # Player quits
             print(f"Thanks for playing. You earned {total_score} points")
             break
 
-        score = GameLogic.calculate_score(dice_kept)
-        dice_remaining -= len(dice_kept)
-        print(f"You have {score} unbanked points and {dice_remaining} dice remaining")
+        total_score = bank_points(total_score, round_score, round)
+        round += 1
 
-        action = handle_player_action()
+        print(f"Total score is {total_score} points")
+        # print(f"Starting round {round}")
+        # dice_rolled = roll_dice(dice_remaining)
+
+        # dice_kept = get_dice_to_bank(dice_rolled)
+        # if dice_kept is None:
+        #     print(f"Thanks for playing. You earned {total_score} points")
+        #     break
+
+        # score = GameLogic.calculate_score(dice_kept)
+        # dice_remaining -= len(dice_kept)
+        # print(f"You have {score} unbanked points and {dice_remaining} dice remaining")
+
+        # action = handle_player_action()
         
-        if action == "b":
-            total_score = bank_points(total_score, score, round)
-            round += 1
-            dice_remaining = 6
-            # print(f"You banked {score} points in round {round}")
-            # print(f"Total score is {total_score} points")
-        elif action == "r":
-            if dice_remaining == 0:
-                dice_remaining = 6
-        elif action == "q":
-            print(f"Thanks for playing. You earned {total_score} points")
-            break
+        # if action == "b":
+        #     total_score = bank_points(total_score, score, round)
+        #     round += 1
+        #     dice_remaining = 6
+        #     # print(f"You banked {score} points in round {round}")
+        #     # print(f"Total score is {total_score} points")
+        # elif action == "r":
+        #     if dice_remaining == 0:
+        #         dice_remaining = 6
+        # elif action == "q":
+        #     print(f"Thanks for playing. You earned {total_score} points")
+        #     break
         
 
 if __name__ == "__main__":
