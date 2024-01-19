@@ -71,6 +71,12 @@ def do_round(round_num):
         score = GameLogic.calculate_score(dice_kept)
         round_score += score
         dice_remaining -= len(dice_kept)
+        
+        # Check if all dice are scoring
+        scorers = GameLogic.get_scorers(dice_rolled)
+        if len(scorers) == len(dice_rolled):
+            dice_remaining = 6  # Reset dice if all are scoring
+        
         print(f"You have {round_score} unbanked points and {dice_remaining} dice remaining")
 
         if dice_remaining == 0:  # All dice used, refresh dice
@@ -165,43 +171,14 @@ def start_game():
         total_score = bank_points(total_score, round_score, round)
         round += 1
 
-        print(f"Total score is {total_score} points")
-        # print(f"Starting round {round}")
-        # dice_rolled = roll_dice(dice_remaining)
-
-        # dice_kept = get_dice_to_bank(dice_rolled)
-        # if dice_kept is None:
-        #     print(f"Thanks for playing. You earned {total_score} points")
-        #     break
-
-        # score = GameLogic.calculate_score(dice_kept)
-        # dice_remaining -= len(dice_kept)
-        # print(f"You have {score} unbanked points and {dice_remaining} dice remaining")
-
-        # action = handle_player_action()
-        
-        # if action == "b":
-        #     total_score = bank_points(total_score, score, round)
-        #     round += 1
-        #     dice_remaining = 6
-        #     # print(f"You banked {score} points in round {round}")
-        #     # print(f"Total score is {total_score} points")
-        # elif action == "r":
-        #     if dice_remaining == 0:
-        #         dice_remaining = 6
-        # elif action == "q":
-        #     print(f"Thanks for playing. You earned {total_score} points")
-        #     break
-        
-
 if __name__ == "__main__":
     
-    # rolls = [
-    #     (2, 3, 1, 3, 4, 2),
-    #     (4, 2, 4, 4, 6),
-    #     (3, 2, 3, 2, 1, 4),
-    # ]
+    rolls = [
+        (2, 3, 1, 3, 1, 2),
+        (4, 1, 4, 4, 3, 4),
+        (3, 2, 3, 2, 1, 4),
+    ]
     
-    # def mock_roller(number_of_dice):
-    #     return rolls.pop(0)
-    play()
+    def mock_roller(number_of_dice):
+        return rolls.pop(0)
+    play(roller=mock_roller)
