@@ -38,4 +38,4 @@ Features: It allows user to set aside dice each roll, “bank” current score o
 
 #### Tests
 
-- Run tests by activating virtual environment and running `python -m pytest -k version_2` command in command line
+- Run tests by activating virtual environment and running `python -m pytest -k version_3` command in command line

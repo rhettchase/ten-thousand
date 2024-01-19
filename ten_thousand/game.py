@@ -28,15 +28,10 @@ def play(roller=None):
 
 def start_game():
     """
-    Manages the rounds and overall game flow. This function controls the main game loop, including rolling dice, keeping score,
-    and handling player decisions.
-
-    Parameters:
-    roller (function): The function used to roll dice.
+    Manages overall game flow. This function controls the main game loop, maintaining the total_score and round number.
     """
     total_score = 0
     round = 1
-    dice_remaining = 6
     
     while True:
         round_score = do_round(round)
@@ -56,8 +51,9 @@ def do_round(round_num):
         round_num: The current round number
 
     Returns:
-        integer for number of points scored in the round
+        - integer for number of points scored in the round
         -1 has special meaning for "quit"
+        - round_score
     """
     print(f"Starting round {round_num}")
     dice_remaining = 6
@@ -166,13 +162,11 @@ def roll_dice(dice_remaining):
     Rolls the specified number of dice.
     
     Parameters:
-    roller (function): The dice rolling function.
     dice_remaining (int): The number of dice to roll.
     
     Returns:
     tuple: The result of the dice roll.
     """
-    global dice_roller
     print(f"Rolling {dice_remaining} dice...")
     return dice_roller(dice_remaining)
 
