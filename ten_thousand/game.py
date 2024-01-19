@@ -1,6 +1,9 @@
 from ten_thousand.game_logic import GameLogic
 from collections import Counter
 
+dice_roller = None
+
+
 def play(roller=None):
     """Main function for the app. Starts the game of Ten Thousand.
     
@@ -11,21 +14,24 @@ def play(roller=None):
         string: displays the welcome message and prompts the user to start the game.
         It then calls start_game with the appropriate dice roller.
     """
+    global dice_roller
+    dice_roller = GameLogic.roll_dice if roller is None else roller
+    
     if roller is None:
-        roller = GameLogic.roll_dice
+        roller = dice_roller
     welcome()
     response = input("> ")
     if response.lower() == "n":
         print("OK. Maybe another time")
     else:
-        start_game(roller)
+        start_game()
         
 def welcome():
     """Prints the welcome message for the game"""
     print("Welcome to Ten Thousand")
     print("(y)es to play or (n)o to decline")
     
-def roll_dice(roller, dice_remaining):
+def roll_dice(dice_remaining):
     """
     Rolls the specified number of dice.
     
@@ -36,8 +42,9 @@ def roll_dice(roller, dice_remaining):
     Returns:
     tuple: The result of the dice roll.
     """
+    global dice_roller
     print(f"Rolling {dice_remaining} dice...")
-    return roller(dice_remaining)
+    return dice_roller(dice_remaining)
 
 def get_dice_to_bank(dice_rolled):
     """
@@ -98,7 +105,7 @@ def bank_points(total_score, score, round):
     print(f"Total score is {total_score} points")
     return total_score
         
-def start_game(roller):
+def start_game():
     """
     Manages the rounds and overall game flow. This function controls the main game loop, including rolling dice, keeping score,
     and handling player decisions.
@@ -112,7 +119,7 @@ def start_game(roller):
     
     while True:
         print(f"Starting round {round}")
-        dice_rolled = roll_dice(roller, dice_remaining)
+        dice_rolled = roll_dice(dice_remaining)
 
         dice_kept = get_dice_to_bank(dice_rolled)
         if dice_kept is None:
