@@ -1,10 +1,12 @@
-# LAB - Class 07
+# LAB - Class 08
 
-## Project: Ten Thousand v2
+## Project: Ten Thousand v3
 
 ## Project Description
 
-Ten Thousand Game App now allows player to start and play the game. It allows user to set aside dice each roll, “bank” current score or decide to roll again. The app keeps track of total score and the current round.
+Ten Thousand Game App allows player to start and play the game. 
+
+Features: It allows user to set aside dice each roll, “bank” current score or decide to roll again. The app keeps track of total score and the current round. It handles setting aside scoring dice and continuing turn with remaining dice. The app validates user input to handle when cheating occurs. It also allows users to continue rolling with 6 new dice when all dice have scored in the current turn. If a player rolls zilch (no points), the app scores this as a zero and ends the round.
 
 ### Author: Rhett Chase
 
